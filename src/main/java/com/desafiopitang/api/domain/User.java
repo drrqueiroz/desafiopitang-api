@@ -1,12 +1,15 @@
 package com.desafiopitang.api.domain;
 
+import com.desafiopitang.api.exception.BusinessException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
+import java.util.regex.Pattern;
 
 @Entity(name="USERS")
 @Table(name="USERS")
@@ -49,6 +52,41 @@ public class User {
     private LocalDate lastLogin;
 
 
+    public void Validator() {
+
+        final Pattern EMAIL = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        final Pattern TELEFONE = Pattern.compile("[0-9]*");
+
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        if (this.getFirstName() == null || this.getFirstName().isBlank()) {
+            throw new BusinessException("Missing fields", status);
+        }
+        else if (this.getLastName() == null || this.getLastName().isBlank()) {
+            throw new BusinessException("Missing fields", status);
+        }
+        else if (this.getEmail() == null || this.getEmail().isBlank()) {
+            throw new BusinessException("Missing fields", status);
+        }
+        else if (!EMAIL.matcher(this.getEmail()).matches()) {
+            throw new BusinessException("Invalid fields", status);
+        }
+        else if (this.getBirthday() == null) {
+            throw new BusinessException("Missing fields", status);
+        }
+        else if (this.getLogin() == null || this.getLogin().isBlank()) {
+            throw new BusinessException("Missing fields", status);
+        }
+        else if (this.getPassword() == null || this.getPassword().isBlank()) {
+            throw new BusinessException("Missing fields", status);
+        }
+        else if (this.getPhone() == null || this.getPhone().isBlank()) {
+            throw new BusinessException("Missing fields", status);
+        }
+        else if (!TELEFONE.matcher(this.getPhone()).matches()) {
+            throw new BusinessException("Invalid fields", status);
+        }
+    }
 
 
 //	@Override
