@@ -78,10 +78,6 @@ class UserControllerTest {
     }
 
     @Test
-    void findByMe() {
-    }
-
-    @Test
     @DisplayName("Usuário encontrato com sucesso")
     void findByIdSuccess() {
         Mockito.when(userService.findById(Mockito.anyLong())).thenReturn(user);

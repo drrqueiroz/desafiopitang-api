@@ -41,7 +41,7 @@ public interface UserService {
 
     /**
      *
-     * @param userDTO
+     * @param id
      * @return
      */
     public void delete(long id);

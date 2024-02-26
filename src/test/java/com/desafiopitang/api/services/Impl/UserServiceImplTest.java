@@ -59,7 +59,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("Usuários encontrato com sucesso")
+    @DisplayName("Usuários encontrado com sucesso")
     void findAllSucess() {
         Mockito.when(userRepository.findAll()).thenReturn(List.of(user));
         List<User> userList = userService.findAll();
@@ -69,11 +69,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void findByMe() {
-    }
-
-    @Test
-    @DisplayName("Usuário encontrato com sucesso")
+    @DisplayName("Usuário encontrado com sucesso")
     void findByIdSucess() {
         Mockito.when(userRepository.findById(Mockito.anyLong())).thenReturn(optionalUser);
         User user = userService.findById(ID);
