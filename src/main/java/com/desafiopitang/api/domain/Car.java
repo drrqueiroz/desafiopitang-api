@@ -1,10 +1,12 @@
 package com.desafiopitang.api.domain;
 
+import com.desafiopitang.api.exception.BusinessException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
 
 @Entity(name = "CARS")
 @Table(name = "CARS")
@@ -36,5 +38,21 @@ public class Car  {
     @JoinColumn(name = "USER_ID")
     private User user;
 
+    public void Validator() {
+
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        if (String.valueOf(this.getYear()).length() < 4) {
+            throw new BusinessException("Invalid fields", status);
+        }
+        else if (this.getLicensePlate() == null || this.getLicensePlate().isBlank()) {
+            throw new BusinessException("Missing fields", status);
+        }
+        else if (this.getModel() == null || this.getModel().isBlank()) {
+            throw new BusinessException("Missing fields", status);
+        }
+        else if (this.getColor() == null || this.getColor().isBlank()) {
+            throw new BusinessException("Missing fields", status);
+        }
+    }
 
 }
