@@ -34,14 +34,18 @@ public class UserServiceImpl implements UserService {
 
 
     /**
-     *
-     * @return
+     * Consultar todos os usuários cadastrados
+     * @return List de usuários
      */
     @Override
     public List<User> findAll(){
         return this.userRepository.findAll();
     }
 
+    /**
+     * Consultar informacoes do usuário logado
+     * @return Objeto DTO
+     */
     public UserMeDTO findByMe() {
 
         Optional<User> user = userRepository.findUserByLogin("hello.worlde");
@@ -65,9 +69,9 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     *
-     * @param id
-     * @return
+     * Consular usuário pelo atributo de identificação
+     * @param id Atributo Identificador do usuário
+     * @return Objeto user entity
      */
     public User findById(long id) {
 
@@ -80,9 +84,9 @@ public class UserServiceImpl implements UserService {
 
     }
     /**
-     *
-     * @param userDTO
-     * @return
+     * Inserir um objeto usuário
+     * @param userDTO Objeto DTO usuário
+     * @return Objeto usuário entity
      */
     public User insert(UserDTO userDTO) {
 
@@ -117,9 +121,9 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     *
-     * @param userDTO
-     * @return
+     * Atualizar as informações do usuário
+     * @param userDTO Objeto DTO usuário
+     * @return Objeto usuário entity
      */
     public User update(UserDTO userDTO) {
 
@@ -142,8 +146,8 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     *
-     * @param id
+     * Deletar o registro do usuário
+     * @param id Atributo Identificador do car
      */
     public void delete(long id) {
         findById(id);
