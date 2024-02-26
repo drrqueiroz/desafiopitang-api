@@ -28,6 +28,11 @@ public class CarServiceImpl implements CarService {
         return this.carRepository.findAll();
     }
 
+    /**
+     * Consular um carro pelo atributo identificador
+     * @param id Atributo Identificador do car
+     * @return Objeto car entity
+     */
     public Car findById(Long id) {
 
         Optional<Car> car = carRepository.findById(id);
@@ -40,9 +45,9 @@ public class CarServiceImpl implements CarService {
     }
 
     /**
-     *
-     * @param id
-     * @return
+     * Consultar uma lista de carro do atributo identificador do usuário
+     * @param id  Atributo Identificador do car
+     * @return List car
      */
     public List<Car> findCarByUserList(Long id) {
 
@@ -56,9 +61,9 @@ public class CarServiceImpl implements CarService {
     }
 
     /**
-     *
-     * @param carDTO
-     * @return
+     * Inserir um objeto car
+     * @param carDTO Objeto DTO car
+     * @return Ojbeto car entity
      */
     public Car insert(CarDTO carDTO) {
 
@@ -67,9 +72,9 @@ public class CarServiceImpl implements CarService {
     }
 
     /**
-     *
-     * @param car
-     * @return
+     * Inserir um objeto car
+     * @param car Objeto car entity
+     * @return Objeto entity car
      */
     public Car insert(Car car) {
 
@@ -82,10 +87,10 @@ public class CarServiceImpl implements CarService {
     }
 
     /**
-     *
-     * @param id
-     * @param carDTO
-     * @return
+     * Atualizar as informações do car
+     * @param id Atributo Identificador do car
+     * @param carDTO Objeto car DTO
+     * @return Objeto car entity
      */
     public Car update(Long id, CarDTO carDTO) {
 
@@ -102,8 +107,8 @@ public class CarServiceImpl implements CarService {
     }
 
     /**
-     *
-     * @param id
+     * Deletar o registro  car
+     * @param id Atributo Identificador do car
      */
     public void delete(Long id) {
         findById(id);
