@@ -107,6 +107,15 @@ public class CarServiceImpl implements CarService {
     }
 
     /**
+     *
+     * @param carDTO
+     * @return
+     */
+    public Car update(CarDTO carDTO) {
+        return update(carDTO.getId(), carDTO);
+    }
+
+    /**
      * Deletar o registro  car
      * @param id Atributo Identificador do car
      */

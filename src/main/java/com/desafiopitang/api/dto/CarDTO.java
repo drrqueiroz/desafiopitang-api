@@ -22,4 +22,5 @@ public class CarDTO {
     private String color;
 
     private UserDTO user;
+
 }

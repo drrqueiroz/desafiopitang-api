@@ -50,6 +50,13 @@ public interface CarService {
 
     /**
      *
+     * @param carDTO
+     * @return
+     */
+    public Car update(CarDTO carDTO);
+
+    /**
+     *
      * @param id
      * @return
      */
