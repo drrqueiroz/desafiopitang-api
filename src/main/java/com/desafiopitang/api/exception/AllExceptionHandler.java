@@ -28,7 +28,6 @@ public class AllExceptionHandler  {
     @SuppressWarnings("rawtypes")
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ErroDTO>  businessException(BusinessException exception) {
-        HttpStatus status = null;
         ErroDTO erroDTO = new ErroDTO(exception.getMessage(), String.valueOf(exception.getStatus().value()));
         return ResponseEntity.status(exception.getStatus()).body(erroDTO);
     }
