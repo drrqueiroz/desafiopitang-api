@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class UserController {
     private UserService userService;
 
 
-    @GetMapping
+    @GetMapping(path = "/users")
     public ResponseEntity<List<UserDTO>> findAll() {
 
         List<User> listUser = userService.findAll();
@@ -45,21 +45,21 @@ public class UserController {
 
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/users/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
         User user = userService.findById(id);
         return new ResponseEntity<>(mapStructMapper.toUserDTO(user) , HttpStatus.OK);
     }
 
     @Transactional
-    @PostMapping
+    @PostMapping(path = "/users")
     public ResponseEntity<UserDTO> insert(@RequestBody UserDTO userDTO) {
 
         User user = userService.insert(userDTO);
         return new ResponseEntity<>(mapStructMapper.toUserDTO(user) , HttpStatus.CREATED);
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/users/{id}")
     public ResponseEntity<UserDTO> update(@PathVariable long id, @RequestBody UserDTO userDTO) {
         userDTO.setId(id);
         User user = userService.update(userDTO);
@@ -67,7 +67,7 @@ public class UserController {
 
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/users/{id}")
     public ResponseEntity<Object> delete(@PathVariable long id) {
         userService.delete(id);
         Map<String, Object> map = new HashMap<String, Object>();
