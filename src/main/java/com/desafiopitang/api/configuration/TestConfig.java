@@ -20,8 +20,8 @@ public class TestConfig {
 
     @Bean
     public boolean loadDB() {
-        User user = new User(null, "Davidson", "Queiroz", "drrqueiroz@gmail.com", LocalDate.parse("1990-05-01", DateTimeFormatter.ISO_LOCAL_DATE), "drrqueiroz", "123", "9123456", LocalDate.now(), null);
-        User user2 =new User(null, "David", "Lopes", "david@gmail.com", LocalDate.parse("1990-05-01", DateTimeFormatter.ISO_LOCAL_DATE), "david", "123", "94556255", LocalDate.now(), null);
+        User user = new User(null, "Davidson", "Queiroz", "queiroz@test.com", LocalDate.parse("1990-05-01", DateTimeFormatter.ISO_LOCAL_DATE), "drrqueiroz", "123", "9123456", LocalDate.now(), null);
+        User user2 =new User(null, "David", "Lopes", "david@testcom", LocalDate.parse("1990-05-01", DateTimeFormatter.ISO_LOCAL_DATE), "admin", "admin", "94556255", LocalDate.now(), null);
 
         repositoryUser.saveAll(List.of(user, user2));
         return true;

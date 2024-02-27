@@ -12,7 +12,9 @@ import com.desafiopitang.api.repository.UserRepository;
 import com.desafiopitang.api.services.CarService;
 import com.desafiopitang.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -102,6 +104,7 @@ public class UserServiceImpl implements UserService {
 
         User user = mapStructMapper.toUserEntity(userDTO);
         user.setCreatedAt(LocalDate.now());
+        user.setPassword(encryptValue(user.getPassword()));
         user.Validator();
         User newUser = userRepository.save(user);
 
@@ -141,6 +144,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDTO.getEmail());
         user.setBirthday(userDTO.getBirthday());
         user.setPhone(userDTO.getPhone());
+        user.setPassword(encryptValue(userDTO.getPassword()));
 
         return userRepository.save(user);
     }
@@ -152,6 +156,15 @@ public class UserServiceImpl implements UserService {
     public void delete(long id) {
         findById(id);
         userRepository.deleteById(id);
+    }
+
+    /**
+     * Encrupt value
+     * @param value
+     * @return
+     */
+    private String encryptValue(String value){
+        return  new BCryptPasswordEncoder().encode(value);
     }
 }
 

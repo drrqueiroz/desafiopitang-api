@@ -1,9 +1,9 @@
-package com.desafiopitang.api.authentication;
+package com.desafiopitang.api.security;
+
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -18,6 +18,7 @@ import java.util.function.Function;
 @Component
 public class JwtTokenUtil implements Serializable {
     private static final long serialVersionUID = -2550185165626007488L;
+
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 1000; // 5 minutos
 
     @Value("${jwt.secret}")
@@ -44,7 +45,7 @@ public class JwtTokenUtil implements Serializable {
     //para retornar qualquer informação do token nos iremos precisar da secret key
     private Claims getAllClaimsFromToken2(String token) {
         try{
-            return null;//Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+            return Jwts.parser().setSigningKey(secret).build().parseClaimsJws(token).getBody();
         }catch(Exception e) {
             return null;
         }
@@ -100,7 +101,7 @@ public class JwtTokenUtil implements Serializable {
 
     private Claims getClaims(String token) {
         try{
-            return  null;//Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
+            return  Jwts.parser().setSigningKey(secret.getBytes()).build().parseClaimsJws(token).getBody();
         }catch (Exception e){
             return null;
         }

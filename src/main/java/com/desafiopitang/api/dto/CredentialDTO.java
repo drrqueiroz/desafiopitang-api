@@ -5,13 +5,13 @@ import lombok.Getter;
 import java.io.Serializable;
 
 @Getter
-public class CredenciasDTO implements Serializable {
+public class CredentialDTO implements Serializable {
 
     private static  final  long serialVersionUID = 1L;
 
-    private String usuario;
+    private String login;
 
-    private String senha;
+    private String password;
 
 }
 

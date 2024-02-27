@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 import java.util.regex.Pattern;
 
 @Entity(name="USERS")
@@ -54,6 +56,35 @@ public class User implements UserDetails {
     @Column(name="LASTLOGIN")
     private LocalDate lastLogin;
 
+    private UserRole role;
+
+
+    /**
+     *
+     * @param id
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param birthday
+     * @param login
+     * @param password
+     * @param phone
+     * @param createdAt
+     * @param lastLogin
+     */
+    public User(Long id, String firstName, String lastName, String email, LocalDate birthday, String login, String password, String phone, LocalDate createdAt, LocalDate lastLogin) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.birthday = birthday;
+        this.login = login;
+        this.password = password;
+        this.phone = phone;
+        this.createdAt = createdAt;
+        this.lastLogin = lastLogin;
+    }
+
 
     public void Validator() {
 
@@ -93,7 +124,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
 
     @Override
