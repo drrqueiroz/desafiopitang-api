@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,8 +36,8 @@ class UserServiceImplTest {
     public static final String LOGIN = "drrqueiroz";
     public static final String PASSWORD = "123";
     public static final String PHONE = "945666798";
-    public static final LocalDate CREATED = LocalDate.now();
-    public static final LocalDate LAST_LOGIN = null;
+    public static final LocalDateTime CREATED = LocalDateTime.now();
+    public static final LocalDateTime LAST_LOGIN = null;
     public static final List<CarDTO> CAR_DTO_LIST = null;
     @InjectMocks
     private UserServiceImpl userService;

@@ -9,6 +9,7 @@ import com.desafiopitang.api.dto.UserMeDTO;
 import com.desafiopitang.api.exception.BusinessException;
 import com.desafiopitang.api.mapper.MapStructMapper;
 import com.desafiopitang.api.repository.UserRepository;
+import com.desafiopitang.api.security.JwtTokenUtil;
 import com.desafiopitang.api.services.CarService;
 import com.desafiopitang.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +36,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private MapStructMapper mapStructMapper;
 
-
     /**
      * Consultar todos os usuários cadastrados
      * @return List de usuários
@@ -48,9 +49,9 @@ public class UserServiceImpl implements UserService {
      * Consultar informacoes do usuário logado
      * @return Objeto DTO
      */
-    public UserMeDTO findByMe() {
+    public UserMeDTO findByMe(String pLogin) {
 
-        Optional<User> user = userRepository.findUserByLogin("hello.worlde");
+        Optional<User> user = userRepository.findUserByLogin(pLogin);
         if (user.isPresent()) {
             UserMeDTO userMeDto = mapStructMapper.toUserMeDTO(user.get());
             List<Car> cars = carService.findCarByUserList(user.get().getId());
@@ -68,6 +69,12 @@ public class UserServiceImpl implements UserService {
             throw new BusinessException("User não encontrato.", HttpStatus.NOT_FOUND);
         }
 
+    }
+
+    public User findByLogin(String pLogin) {
+
+        Optional<User> result = userRepository.findUserByLogin(pLogin);
+        return result.orElse(null);
     }
 
     /**
@@ -103,7 +110,7 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = mapStructMapper.toUserEntity(userDTO);
-        user.setCreatedAt(LocalDate.now());
+        user.setCreatedAt(LocalDateTime.now());
         user.setPassword(encryptValue(user.getPassword()));
         user.Validator();
         User newUser = userRepository.save(user);
@@ -147,6 +154,18 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encryptValue(userDTO.getPassword()));
 
         return userRepository.save(user);
+    }
+
+    /**
+     *
+     * @param pLogin
+     */
+    public void updateRegistLastLogin(String pLogin) {
+        Optional<User> objUser = userRepository.findUserByLogin(pLogin);
+        if (objUser.isPresent()){
+            objUser.get().setLastLogin(LocalDateTime.now());
+            userRepository.save(objUser.get());
+        }
     }
 
     /**

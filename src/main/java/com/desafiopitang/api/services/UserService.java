@@ -15,9 +15,15 @@ public interface UserService {
 
     /**
      *
+     * @param pLogin
      * @return
      */
-    public UserMeDTO findByMe();
+    public User findByLogin(String pLogin);
+    /**
+     *
+     * @return
+     */
+    public UserMeDTO findByMe(String pLogin);
 
     /**
      *
@@ -38,6 +44,12 @@ public interface UserService {
      * @return
      */
     public User update(UserDTO userDTO);
+
+    /**
+     *
+     * @param pLogin
+     */
+    public void updateRegistLastLogin(String pLogin);
 
     /**
      *
