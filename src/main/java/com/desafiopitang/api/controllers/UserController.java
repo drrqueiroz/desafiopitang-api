@@ -5,7 +5,9 @@ import com.desafiopitang.api.domain.User;
 import com.desafiopitang.api.dto.UserDTO;
 import com.desafiopitang.api.dto.UserMeDTO;
 import com.desafiopitang.api.mapper.MapStructMapper;
+import com.desafiopitang.api.security.JwtTokenUtil;
 import com.desafiopitang.api.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
 
     @GetMapping(path = "/users")
     public ResponseEntity<List<UserDTO>> findAll() {
@@ -38,11 +43,11 @@ public class UserController {
     }
 
     @GetMapping(path = "/me")
-    public ResponseEntity<UserMeDTO> findByMe() {
-
-        UserMeDTO userMeDTO = userService.findByMe();
+    public ResponseEntity<UserMeDTO> findByMe(HttpServletRequest request) {
+        String header = request.getHeader("Authorization");
+        String username = jwtTokenUtil.getUsername(header.substring(7));
+        UserMeDTO userMeDTO = userService.findByMe(username);
         return new ResponseEntity<>(userMeDTO, HttpStatus.OK);
-
     }
 
     @GetMapping(path = "/users/{id}")

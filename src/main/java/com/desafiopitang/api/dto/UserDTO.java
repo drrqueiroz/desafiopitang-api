@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -24,7 +25,7 @@ public class UserDTO {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String phone;
-    private LocalDate createdAt;
-    private LocalDate lastLogin;
+    private LocalDateTime createdAt;
+    private LocalDateTime lastLogin;
     private List<CarDTO> cars;
 }

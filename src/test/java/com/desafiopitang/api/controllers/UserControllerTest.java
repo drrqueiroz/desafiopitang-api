@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import springfox.documentation.swagger2.mappers.ModelMapper;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +37,8 @@ class UserControllerTest {
     public static final String LOGIN = "drrqueiroz";
     public static final String PASSWORD = "123";
     public static final String PHONE = "945666798";
-    public static final LocalDate CREATED = LocalDate.now();
-    public static final LocalDate LAST_LOGIN = null;
+    public static final LocalDateTime CREATED = LocalDateTime.now();
+    public static final LocalDateTime LAST_LOGIN = null;
     public static final List<CarDTO> CAR_DTO_LIST = null;
 
     @InjectMocks
