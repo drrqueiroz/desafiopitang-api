@@ -2,7 +2,9 @@ package com.desafiopitang.api.controllers;
 
 import com.desafiopitang.api.domain.User;
 import com.desafiopitang.api.dto.CredentialDTO;
+import com.desafiopitang.api.dto.TokenDTO;
 import com.desafiopitang.api.security.JwtTokenUtil;
+import com.desafiopitang.api.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,9 @@ public class AuthenticationController {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    private UserService userService;
     ;
 
     @PostMapping("/singin")
@@ -31,8 +36,7 @@ public class AuthenticationController {
 
         String username = ((User) auth.getPrincipal()).getUsername();
         String token = jwtTokenUtil.generateToken(username);
-
-       // res.addHeader("Authorization", "Bearer " + token);
-        return ResponseEntity.ok(token);
+        userService.updateRegistLastLogin(jwtTokenUtil.getUsername(token));
+        return ResponseEntity.ok(new TokenDTO(token));
     }
 }

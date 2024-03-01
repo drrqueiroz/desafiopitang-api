@@ -5,11 +5,26 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.AuthorizationServiceException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
+
+import java.util.Locale;
 
 @RestControllerAdvice
 public class AllExceptionHandler  {
+
+    @ExceptionHandler({BadCredentialsException.class, InternalAuthenticationServiceException.class})
+    public ResponseEntity<ErroDTO> authenticationException(Exception ex, Locale locale) {
+
+        ErroDTO erroDTO = new ErroDTO("Invalid login or password", String.valueOf(HttpStatus.UNAUTHORIZED.value()));
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(erroDTO);
+    }
 
     @SuppressWarnings("rawtypes")
     @ExceptionHandler(DataIntegrityViolationException.class)

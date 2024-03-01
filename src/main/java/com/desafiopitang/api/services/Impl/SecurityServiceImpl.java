@@ -16,4 +16,5 @@ public class SecurityServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findUserByLoginAuth(username);
     }
+
 }
