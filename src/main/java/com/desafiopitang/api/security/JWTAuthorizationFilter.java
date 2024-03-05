@@ -1,28 +1,20 @@
 package com.desafiopitang.api.security;
 
-import com.desafiopitang.api.domain.User;
 import com.desafiopitang.api.dto.ErroDTO;
-import com.desafiopitang.api.exception.BusinessException;
-import com.desafiopitang.api.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import springfox.documentation.spring.web.json.Json;
 
 import java.io.IOException;
 
@@ -41,30 +33,31 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
                                     FilterChain chain) throws IOException, ServletException {
         String header = req.getHeader("Authorization");
 
+
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.substring(7);
             UsernamePasswordAuthenticationToken authentication = getAuthentication(token);
             if (authentication != null) {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                //Register date last login
-
             }else{
-                //throw  new BusinessException("Unauthorized - invalid session”", HttpStatus.FORBIDDEN);
-                ErroDTO error = new ErroDTO("Unauthorized - invalid session", String.valueOf(HttpStatus.FORBIDDEN.value()));
-                ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
-                ObjectMapper objectMapper = new ObjectMapper();
-                String json = objectWriter.writeValueAsString(error);
-                json= objectMapper.writeValueAsString(error);
-
-                //res.getWriter().write(json);
-                res.getWriter().write("Unauthorized - invalid session" );
-                res.setContentType("application/json");
-                res.setCharacterEncoding("UTF-8");
-                res.setStatus(HttpStatus.UNAUTHORIZED.value());
+              httpServletResponse(res, "Unauthorized - invalid session");
+              return;
             }
-        }else{
-          //  res.getWriter().write("Unauthorized" );
-          //  res.setStatus(HttpStatus.UNAUTHORIZED.value());
+        }else {
+            String patch = req.getRequestURI();
+            boolean isAuthorized = false;
+
+            for (int i = 0; i < JWTRotas.PUBLIC_MATCHERS.length; i++){
+                String publicMatchers = JWTRotas.PUBLIC_MATCHERS[i];
+                if (publicMatchers.contains("**") && patch.contains(publicMatchers.substring(0, publicMatchers.indexOf("/**")))) {
+                    isAuthorized = true;
+                    break;
+                }
+            }
+            if(!isAuthorized) {
+                httpServletResponse(res, "Unauthorized");
+                return;
+            }
         }
 
         chain.doFilter(req, res);
@@ -78,6 +71,20 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         }
         return null;
+    }
+
+    private void httpServletResponse(HttpServletResponse res, String message) throws IOException {
+
+        ErroDTO error = new ErroDTO(message, String.valueOf(HttpStatus.UNAUTHORIZED.value()));
+        ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectWriter.writeValueAsString(error);
+
+        res.getWriter().write(json);
+        res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
+        res.setStatus(HttpStatus.UNAUTHORIZED.value());
+
     }
 }
 
