@@ -1,4 +1,4 @@
-# Cadastro de Usuários e Carros
+# APIREST de Cadastro de Usuários e Carros
 
 Projeto desenvolvido com finalidade de apresentar o conhecimento de varias tecnologias.
 
@@ -8,45 +8,105 @@ Essas instruções permitirão que você obtenha uma cópia do projeto em opera�
 Consulte **[Implantação](#-implanta%C3%A7%C3%A3o)** para saber como implantar o projeto.
 
 ### 📋 Pré-requisitos
-Instalação java17
-SpringBoot
+Java17
+
 Maven
 
 
 ### 🔧 Instalação
 
-Uma série de exemplos passo-a-passo que informam o que você deve executar para ter um ambiente de desenvolvimento em execução.
+Voçê pode baixar o projeto abrindo o terminal de sua preferência e usando o comando, 
 
-Diga como essa etapa será:
+git clone https://github.com/drrqueiroz/desafiopitang-api.git 
+ou acessar o link https://github.com/drrqueiroz/desafiopitang-api/tree/master para baixar o projeto. 
+Navegue até a raiz do projeto "pasta que contém o arquivo pom.xml", e execute o sequinte comando.
+```
+mvn install
+```
+Utilize uma ide de desenvovimento como IntelliJ ou Eclipse para abrir o projeto e Postman ou Isomnia para realizar os testes.
+Com o projeto aberto, start o mesmo para iniciar os testes, voce pode consultar os endpoint acessando o link 
+http://localhost:8080/swagger-ui/index.html no seu navegador.
+
+Exemplo:
 
 ```
-Dar exemplos
+Endpoint de cadastro de usuário: http://localhost:8080/api/users
+Verbo: POST
 ```
 
-E repita:
+```
+Json para teste "copiar e colar no body do Postman ou Insomnia"
+{
+"firstName": "Hello",
+"lastName": "World",
+"email": "hello@world.com",
+"birthday": "1990-05-01",
+"login": "hello.world",
+"password": "h3ll0",
+"phone": "988888888",
+}
+```
 
 ```
-Até finalizar
+Endpoint listar todos usuários cadastrados: http://localhost:8080/api/users
+Verbo: GET
 ```
 
-Termine com um exemplo de como obter dados do sistema ou como usá-los para uma pequena demonstração.
-
-# Command Line
-## Buildar projeto
-mvn clean install
-
+```
+Json de retorno
+{
+"id": 1
+"firstName": "Hello",
+"lastName": "World",
+"email": "hello@world.com",
+"birthday": "1990-05-01",
+"login": "hello.world",
+"password": "h3ll0",
+"phone": "988888888",
+}
+```
 ## ⚙️ Executando os testes
-CommandLine: mvn test
+Se desejar realizar os test acesse o seu pronpt de commando apontando para a pasta raiz do projeto e digite o comando abaixo.
+```
+mvn test
+```
 
-## Roda local aplicação
-1. mvn clean package
-2. cd ..\..\..\target
-3. java -jar nome_arquivo.jar
+### 🔩 Analise os testes de ponta a ponta
 
+Os testes foram denvolvidos nas principais funçoes da API, e ajudaram com que o sistema apresente bugs.
 
 ## 📦 Implantação
 
-Adicione notas adicionais sobre como implantar isso em um sistema ativo
+Para rodar localmente a API sem precisar utilizar uma IDE de desenvolvimento basta seguir as instruções abaixo
+```
+## Roda local a aplicação
+## Abrir o terminal na raiz do projeto e realizar os seguintes comandos.
+
+1. mvn clean package
+2. cd ..\..\..\target
+3. java -jar nome_arquivo.jar
+```
+
+## 🛠️ Construído com
+
+
+* [IntelliJ IDEA](https://www.jetbrains.com/pt-br/idea/) - IDE de desenvolvimento
+* [Maven](https://maven.apache.org/) - Gerente de Dependência
+
+## 📌 Versão
+
+Nós usamos [Git](https://github.com) para controle de versão. Para as versões disponíveis, observe as [tags neste repositório](https://github.com/drrqueiroz/desafiopitang-api).
+
+## ✒️ Autores
+
+* **Um desenvolvedor** - *Trabalho Inicial* - [Davidson Queiroz](https://github.com/drrqueiroz/desafiopitang-api)
+* **Davidson Queiroz** - *Documentação* - [Davidson Queiroz](https://github.com/drrqueiroz/desafiopitang-api)
+
+Você também pode ver a lista de todos os [colaboradores](https://github.com/usuario/projeto/colaboradores) que participaram deste projeto.
+
+
+
+
 
 
 
