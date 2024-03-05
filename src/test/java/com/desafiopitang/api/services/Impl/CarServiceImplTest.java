@@ -7,7 +7,9 @@ import com.desafiopitang.api.dto.UserDTO;
 import com.desafiopitang.api.exception.BusinessException;
 import com.desafiopitang.api.mapper.MapStructMapper;
 import com.desafiopitang.api.repository.CarRepository;
-import com.desafiopitang.api.services.CarService;
+import com.desafiopitang.api.repository.UserRepository;
+import com.desafiopitang.api.security.JwtTokenUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +38,14 @@ class CarServiceImplTest {
     public static final String MODEL = "Jeep";
     public static  final String COLOR = "Black";
 
+    public static  final User USER = new User();
+    public static  final UserDTO USERDTO = new UserDTO();
+
+    public static  final String TOKEN = "Barear 46546546546464654654654454545454";
+    public static  final String AUTHORIZATION = "Authorization";
+
+
+
 
 
     @Mock
@@ -42,11 +54,21 @@ class CarServiceImplTest {
     @Mock
     private MapStructMapper mapStructMapper;
 
+    @Mock
+    private HttpServletRequest httpServletRequest;
+
+    @Mock
+    private JwtTokenUtil  jwtTokenUtil;
+
+    @Mock
+    private UserRepository userRepository;
+
     @InjectMocks
     private CarServiceImpl carService;
     private Car car;
     private CarDTO carDTO;
     private Optional<Car> optionalCar;
+    private Optional<User> optionalUser;
 
     @BeforeEach
     void setUp() {
@@ -57,24 +79,23 @@ class CarServiceImplTest {
     @Test
     @DisplayName("Carros encontrato com sucesso")
     void findAllSucess() {
-        Mockito.when(carRepository.findAll()).thenReturn(List.of(car));
+        Mockito.when(httpServletRequest.getHeader(Mockito.anyString())).thenReturn(TOKEN);
+        Mockito.when(carRepository.findCarByUserList(Mockito.anyLong())).thenReturn(Optional.of(List.of(car)));
         List<Car> carList = carService.findAll();
         assertNotNull(carList);
         assertEquals(Car.class, carList.get(0).getClass());
         assertEquals(ID, carList.get(0).getId());
     }
 
-
-
     @Test
     @DisplayName("Carro encontrado com sucesso")
     void findByIdSucess() {
         Mockito.when(carRepository.findById(Mockito.anyLong())).thenReturn(optionalCar);
-        Car user = carService.findById(ID);
+        Car car = carService.findById(ID);
 
-        assertNotNull(user);
-        assertEquals(Car.class, user.getClass());
-        assertEquals(ID, user.getId());
+        assertNotNull(car);
+        assertEquals(Car.class, car.getClass());
+        assertEquals(ID, car.getId());
     }
 
     @Test
@@ -82,7 +103,7 @@ class CarServiceImplTest {
     void findByIdNotFound() {
         Mockito.when(carRepository.findById(Mockito.anyLong())).thenThrow(new BusinessException("Carro não encontrado."));
         try {
-            Car user = carService.findById(ID);
+            Car car = carService.findById(ID);
         }catch (Exception e){
             assertEquals(BusinessException.class, e.getClass());
             assertEquals("Carro não encontrado.", e.getMessage());
@@ -170,18 +191,19 @@ class CarServiceImplTest {
 
 
     private void createCar() {
-        User user = new User();
-        user.setId(1L);
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(1L);
+        USER.setId(1L);
+        USERDTO.setId(1L);
 
         car = new Car(ID, YEAR, LICENSEPLATE, MODEL,
-                COLOR, user);
+                COLOR, USER);
 
         carDTO = new CarDTO(ID, YEAR, LICENSEPLATE, MODEL,
-                COLOR, userDTO);
+                COLOR, USERDTO);
 
         optionalCar = Optional.of(new Car(ID, YEAR, LICENSEPLATE, MODEL,
-                COLOR, user));
+                COLOR, USER));
+
+        optionalUser = Optional.of(new User(ID, "Davidson", "Queiroz","teste@teste.com",
+                LocalDate.parse("1981-01-02"), "drrqueiroz", "123", "5465645464", LocalDateTime.now(), null));
     }
 }

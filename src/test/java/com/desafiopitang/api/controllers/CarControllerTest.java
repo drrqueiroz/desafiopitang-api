@@ -6,7 +6,6 @@ import com.desafiopitang.api.dto.CarDTO;
 import com.desafiopitang.api.dto.UserDTO;
 import com.desafiopitang.api.mapper.MapStructMapper;
 import com.desafiopitang.api.services.CarService;
-import com.desafiopitang.api.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -33,6 +31,9 @@ class CarControllerTest {
     public static final String LICENSEPLATE = "PCU-8530";
     public static final String MODEL = "Jeep";
     public static  final String COLOR = "Black";
+    public static  final User USER = new User();
+    public static  final UserDTO USERDTO = new UserDTO();
+
 
     @InjectMocks
     private CarController carController;
@@ -98,7 +99,7 @@ class CarControllerTest {
     }
 
     @Test
-    @DisplayName("Usuário atualizado com sucesso.")
+    @DisplayName("Carro atualizado com sucesso.")
     void updateSuccess() {
         Mockito.when(carService.update(Mockito.any())).thenReturn(car);
         Mockito.when(mapStructMapper.toCarDTO(Mockito.any())).thenReturn(carDTO);
@@ -115,7 +116,7 @@ class CarControllerTest {
     }
 
     @Test
-    @DisplayName("Usuário deletado com success")
+    @DisplayName("Carro deletado com success")
     void deleteSuccess() {
         Mockito.doNothing().when(carService).delete(Mockito.anyLong());
         ResponseEntity<Object> response = carController.delete(ID);
@@ -124,16 +125,14 @@ class CarControllerTest {
     }
 
     private void createCar() {
-        User user = new User();
-        user.setId(1L);
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(1L);
+        USER.setId(1L);
+        USERDTO.setId(1L);
 
         car = new Car(ID, YEAR, LICENSEPLATE, MODEL,
-                COLOR, user);
+                COLOR, USER);
 
         carDTO = new CarDTO(ID, YEAR, LICENSEPLATE, MODEL,
-                COLOR, userDTO);
+                COLOR, USERDTO);
     }
 
 }
