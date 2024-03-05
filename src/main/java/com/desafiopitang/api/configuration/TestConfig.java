@@ -23,7 +23,9 @@ public class TestConfig {
     @Bean
     public boolean loadDB() {
         User user = new User(null, "Davidson", "Queiroz", "queiroz@test.com", LocalDate.parse("1990-05-01", DateTimeFormatter.ISO_LOCAL_DATE), "drrqueiroz", "$2a$10$D6S8QxB5Jq5UnvLzH8TVb.Q59Wb7Sfc/kbJKN6VOySzl348RULAjC", "9123456", LocalDateTime.now(), null);
-        User user2 =new User(null, "David", "Lopes", "david@testcom", LocalDate.parse("1990-05-01", DateTimeFormatter.ISO_LOCAL_DATE), "admin", "$2a$10$D6S8QxB5Jq5UnvLzH8TVb.Q59Wb7Sfc/kbJKN6VOySzl348RULAjC", "94556255", LocalDateTime.now(), null);
+        LocalDateTime createdAt2 = LocalDateTime.now();
+        LocalDateTime createdAt = LocalDateTime.parse("1990-05-01T00:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME).atZone(ZoneId.of("America/Sao_Paulo")).toLocalDateTime();
+        User user2 =new User(null, "David", "Lopes", "david@testcom", LocalDate.parse("1990-05-01", DateTimeFormatter.ISO_LOCAL_DATE), "admin", "$2a$10$D6S8QxB5Jq5UnvLzH8TVb.Q59Wb7Sfc/kbJKN6VOySzl348RULAjC", "94556255", createdAt, null);
 
         repositoryUser.saveAll(List.of(user, user2));
         return true;
