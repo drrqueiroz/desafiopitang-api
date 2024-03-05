@@ -46,10 +46,10 @@ public interface UserService {
     public User update(UserDTO userDTO);
 
     /**
-     *
      * @param pLogin
+     * @return
      */
-    public void updateRegistLastLogin(String pLogin);
+    public User updateRegistLastLogin(String pLogin);
 
     /**
      *

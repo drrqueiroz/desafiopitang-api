@@ -92,7 +92,7 @@ public class User implements UserDetails {
     @Column(name="LASTLOGIN")
     private LocalDateTime lastLogin;
 
-   // private UserRole role;
+    private UserRole role;
 
 
     public void Validator() {

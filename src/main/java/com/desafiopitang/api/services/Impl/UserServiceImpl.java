@@ -9,16 +9,13 @@ import com.desafiopitang.api.dto.UserMeDTO;
 import com.desafiopitang.api.exception.BusinessException;
 import com.desafiopitang.api.mapper.MapStructMapper;
 import com.desafiopitang.api.repository.UserRepository;
-import com.desafiopitang.api.security.JwtTokenUtil;
 import com.desafiopitang.api.services.CarService;
 import com.desafiopitang.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -157,15 +154,17 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     *
      * @param pLogin
+     * @return
      */
-    public void updateRegistLastLogin(String pLogin) {
+    public User updateRegistLastLogin(String pLogin) {
         Optional<User> objUser = userRepository.findUserByLogin(pLogin);
         if (objUser.isPresent()){
             objUser.get().setLastLogin(LocalDateTime.now());
             userRepository.save(objUser.get());
+            return objUser.get();
         }
+        return null;
     }
 
     /**

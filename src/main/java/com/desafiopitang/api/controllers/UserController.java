@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.swagger2.mappers.ModelMapper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +31,6 @@ public class UserController {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
-
 
     @GetMapping(path = "/users")
     public ResponseEntity<List<UserDTO>> findAll() {

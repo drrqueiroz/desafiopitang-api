@@ -36,7 +36,8 @@ public class AuthenticationController {
 
         String username = ((User) auth.getPrincipal()).getUsername();
         String token = jwtTokenUtil.generateToken(username);
-        userService.updateRegistLastLogin(jwtTokenUtil.getUsername(token));
-        return ResponseEntity.ok(new TokenDTO(token));
+        User user = userService.updateRegistLastLogin(jwtTokenUtil.getUsername(token));
+        String name = user.getFirstName() +" "+ user.getLastName();
+        return ResponseEntity.ok(new TokenDTO(user.getId(), name, token));
     }
 }
