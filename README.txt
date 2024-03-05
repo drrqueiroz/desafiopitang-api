@@ -1,0 +1,2 @@
+### Liberar o acesso do banco H2
+https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/annotation/web/builders/HttpSecurity.html#headers(org.springframework.security.config.Customizer)
