@@ -2,11 +2,15 @@ package com.desafiopitang.api.services.Impl;
 
 
 import com.desafiopitang.api.domain.Car;
+import com.desafiopitang.api.domain.User;
 import com.desafiopitang.api.dto.CarDTO;
 import com.desafiopitang.api.exception.BusinessException;
 import com.desafiopitang.api.mapper.MapStructMapper;
 import com.desafiopitang.api.repository.CarRepository;
+import com.desafiopitang.api.repository.UserRepository;
+import com.desafiopitang.api.security.JwtTokenUtil;
 import com.desafiopitang.api.services.CarService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,11 +25,29 @@ public class CarServiceImpl implements CarService {
     private CarRepository carRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private MapStructMapper mapStructMapper;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    private HttpServletRequest request;
+
+
+    @Autowired
+    public CarServiceImpl(HttpServletRequest request) {
+        this.request = request;
+    }
 
 
     public List<Car> findAll(){
-        return this.carRepository.findAll();
+        Optional<List<Car>> list = this.carRepository.findCarByUserList(getUserIdByToken());
+        if(list.isPresent()){
+            return list.get();
+        }
+       return List.of(null);
     }
 
     /**
@@ -39,7 +61,7 @@ public class CarServiceImpl implements CarService {
         if (car.isPresent()) {
             return car.get();
         }else {
-            throw new BusinessException("Carro não encontrato.", HttpStatus.NOT_FOUND);
+            throw new BusinessException("Carro não encontrado.", HttpStatus.NOT_FOUND);
         }
 
     }
@@ -122,6 +144,16 @@ public class CarServiceImpl implements CarService {
     public void delete(Long id) {
         findById(id);
         carRepository.deleteById(id);
+    }
+
+    public Long getUserIdByToken() {
+        String token = this.request.getHeader("Authorization").substring(7);
+        String login = jwtTokenUtil.getUsername(token);
+        Optional<User> user = userRepository.findUserByLogin(login);
+        if (user.isPresent()){
+            return  user.get().getId();
+        }
+        return 0L;
     }
 }
 

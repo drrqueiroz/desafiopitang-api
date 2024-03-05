@@ -25,9 +25,10 @@ public class CarController {
     @Autowired
     private CarService carService;
 
+
+
     @GetMapping
     public ResponseEntity<List<CarDTO>> findAll() {
-
         List<CarDTO> list = carService.findAll().stream().map(x -> mapStructMapper.toCarDTO(x)).collect(Collectors.toList());
         return new ResponseEntity<>(list, HttpStatus.OK);
     }

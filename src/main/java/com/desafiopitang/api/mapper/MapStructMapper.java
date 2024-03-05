@@ -14,7 +14,7 @@ public interface MapStructMapper {
     //Cars
     Car toCarEntity(CarDTO dto);
 
-    @Mapping(target = "user", ignore = true)
+   // @Mapping(target = "user", ignore = true)
     CarDTO toCarDTO(Car entity);
 
     //User
