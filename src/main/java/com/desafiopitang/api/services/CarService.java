@@ -7,58 +7,57 @@ import java.util.List;
 
 public interface CarService {
     /**
-     *
-     * @return
+     * Consultar todos os carros para o usuário logado
+     * @return Lista de carro
      */
     public List<Car> findAll();
 
     /**
-     *
+     * Consultar carro pelo id
      * @param id
-     * @return
+     * @return Entity carro
      */
     public Car findById(Long id);
 
     /**
-     *
-     * @param id
-     * @return
+     * Consultar lista de carros cadastradas para o usuário
+     * @param id do usuário registrado
+     * @return Lista de Carros
      */
     public List<Car> findCarByUserList(Long id);
 
     /**
-     *
-     * @param carDTO
-     * @return
+     * Salvar carro
+     * @param carDTO DTO carro
+     * @return Entity carro
      */
     public Car insert(CarDTO carDTO);
 
     /**
-     *
-     * @param car
-     * @return
+     * Salvar carro
+     * @param car Entity carro
+     * @return Entity carro
      */
     public Car insert(Car car);
 
     /**
-     *
-     * @param id
-     * @param carDTO
-     * @return
+     * Atualizar as informações do carro
+     * @param id Identificador do carrro
+     * @param carDTO DTO carro
+     * @return Entity carro
      */
     public Car update(Long id, CarDTO carDTO);
 
     /**
-     *
-     * @param carDTO
-     * @return
+     * Atualizar as informações do carro
+     * @param carDTO DTO Carro
+     * @return Entity carro
      */
     public Car update(CarDTO carDTO);
 
     /**
-     *
-     * @param id
-     * @return
+     * Deletar carro
+     * @param id carro
      */
     public void delete(Long id);
 
