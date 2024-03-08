@@ -103,7 +103,6 @@ Nós usamos [Git](https://github.com) para controle de versão. Para as versões
 * **Davidson Queiroz** - *Documentação* - [Davidson Queiroz](https://github.com/drrqueiroz/desafiopitang-api)
 
 
-
 # HISTÓRIAS DO USUÁRIO
 
 ## PERSONA: USUÁRIO
