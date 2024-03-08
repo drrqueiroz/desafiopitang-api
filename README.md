@@ -73,7 +73,7 @@ mvn test
 
 ### 🔩 Analise os testes de ponta a ponta
 
-Os testes foram denvolvidos nas principais funçoes da API, e ajudaram com que o sistema apresente bugs.
+Os testes foram denvolvidos nas principais funçoes da API, e ajudaram na apresentação de possíveis erros
 
 ## 📦 Implantação
 
@@ -83,8 +83,8 @@ Para rodar localmente a API sem precisar utilizar uma IDE de desenvolvimento bas
 ## Abrir o terminal na raiz do projeto e realizar os seguintes comandos.
 
 1. mvn clean package
-2. cd ..\..\..\target
-3. java -jar nome_arquivo.jar
+2. Na pasta raiz do projeto procurar pela pasta target "cd ..\..\..\target" e localizar o arquivo .jar
+3. Via prompt de commando na pasta aonde esta localizado o arquivo .jar do projeto digitar os seguinte commando "java -jar nome_arquivo.jar"
 ```
 
 ## 🛠️ Construído com
@@ -101,12 +101,6 @@ Nós usamos [Git](https://github.com) para controle de versão. Para as versões
 
 * **Um desenvolvedor** - *Trabalho Inicial* - [Davidson Queiroz](https://github.com/drrqueiroz/desafiopitang-api)
 * **Davidson Queiroz** - *Documentação* - [Davidson Queiroz](https://github.com/drrqueiroz/desafiopitang-api)
-
-Você também pode ver a lista de todos os [colaboradores](https://github.com/usuario/projeto/colaboradores) que participaram deste projeto.
-
-
-
-
 
 
 
